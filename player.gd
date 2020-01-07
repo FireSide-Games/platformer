@@ -21,19 +21,19 @@ func _physics_process(delta) -> void:
 
 	if direction.x > 0.0:
 		$Sprite.flip_h = false
-		#$Sprite.play("run")
+		$Sprite/AnimationPlayer.play("run")
 	elif direction.x < 0.0:
 		$Sprite.flip_h = true
-		#$Sprite.play("run")
-	#elif is_on_floor():
-		#$Sprite.play("idle")
+		$Sprite/AnimationPlayer.play("run")
+	elif is_on_floor():
+		$Sprite/AnimationPlayer.play("idle")
 
 	if !is_on_floor():
 		time_since_on_floor += delta
-		#if velocity.y < 0:
-			#$Sprite.play("jump")
-		#else:
-			#$Sprite.play("fall")
+		if velocity.y < 0:
+			$Sprite/AnimationPlayer.play("jump")
+		else:
+			$Sprite/AnimationPlayer.play("fall")
 	else:
 		time_since_on_floor = 0
 
