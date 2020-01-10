@@ -37,7 +37,7 @@ anims/idle = SubResource( 1 )
 
 [node name="woman" parent="." instance=ExtResource( 2 )]
 editor/display_folded = true
-position = Vector2( 234, 118 )
+position = Vector2( 308, 108 )
 
 [node name="Camera2D" type="Camera2D" parent="woman"]
 visible = false

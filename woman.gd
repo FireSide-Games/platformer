@@ -17,7 +17,7 @@ var has_jumped: = false
 # e.g. 'fire'
 func _physics_process(delta) -> void:
 	if Input.is_action_just_pressed("fire"):
-		$Sprite/pistol/AnimationPlayer.play("fire")
+		$character/pistol/AnimationPlayer.play("fire")
 	
 	if has_jumped && is_on_floor():
 		has_jumped = false
@@ -25,25 +25,27 @@ func _physics_process(delta) -> void:
 	var direction: Vector2 = get_direction()
 
 	if direction.x > 0.0:
-		$Sprite.flip_h = false
-		$Sprite/pistol.flip_h = false
-		$Sprite/pistol.position.x = 6
-		$Sprite/AnimationPlayer.play("run")
+		$character.flip_h = false
+		$character/pistol.flip_h = false
+		$character/pistol.position.x = 6
+		$character/arm.position.x = 0
+		$character/AnimationPlayer.play("run")
 	elif direction.x < 0.0:
-		$Sprite.flip_h = true
-		$Sprite/pistol.flip_h = true
-		$Sprite/pistol.position.x = -6
-		$Sprite/AnimationPlayer.play("run")
+		$character.flip_h = true
+		$character/pistol.flip_h = true
+		$character/pistol.position.x = -6
+		$character/arm.position.x = -4
+		$character/AnimationPlayer.play("run")
 	elif is_on_floor() && !Input.is_action_pressed("fire"):
-		$Sprite/pistol/AnimationPlayer.queue("idle")
-		$Sprite/AnimationPlayer.play("stand")
+		$character/pistol/AnimationPlayer.queue("idle")
+		$character/AnimationPlayer.play("stand")
 
 	if !is_on_floor():
 		time_since_on_floor += delta
 		if velocity.y < 0:
-			$Sprite/AnimationPlayer.play("jump")
+			$character/AnimationPlayer.play("jump")
 		else:
-			$Sprite/AnimationPlayer.play("fall")
+			$character/AnimationPlayer.play("fall")
 	else:
 		time_since_on_floor = 0
 
