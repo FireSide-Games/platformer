@@ -13,7 +13,12 @@ var velocity: = Vector2(0, 0)
 var time_since_on_floor: = 0.0
 var has_jumped: = false
 
+# TODO: Program in the 'Weapon' class. Player will have one weapon to start, with abstract methods
+# e.g. 'fire'
 func _physics_process(delta) -> void:
+	if Input.is_action_just_pressed("fire"):
+		$Sprite/pistol/AnimationPlayer.play("fire")
+	
 	if has_jumped && is_on_floor():
 		has_jumped = false
 	
@@ -21,12 +26,17 @@ func _physics_process(delta) -> void:
 
 	if direction.x > 0.0:
 		$Sprite.flip_h = false
+		$Sprite/pistol.flip_h = false
+		$Sprite/pistol.position.x = 6
 		$Sprite/AnimationPlayer.play("run")
 	elif direction.x < 0.0:
 		$Sprite.flip_h = true
+		$Sprite/pistol.flip_h = true
+		$Sprite/pistol.position.x = -6
 		$Sprite/AnimationPlayer.play("run")
-	elif is_on_floor():
-		$Sprite/AnimationPlayer.play("idle")
+	elif is_on_floor() && !Input.is_action_pressed("fire"):
+		$Sprite/pistol/AnimationPlayer.queue("idle")
+		$Sprite/AnimationPlayer.play("stand")
 
 	if !is_on_floor():
 		time_since_on_floor += delta
@@ -72,4 +82,3 @@ func get_direction() -> Vector2:
 
 func can_jump() -> bool:
 	return !has_jumped && (is_on_floor() || time_since_on_floor <= coyote_time)
-
